@@ -11,9 +11,9 @@ ctx.fillStyle = RED;
 ctx.lineWidth = 4;
 
 const MASU_NUM = 16;
-const MASU_RADIUS = 10;
-const MAP_CENTER = [300,300];
-const MAP_RADIUS = 100;
+const MASU_RADIUS = 20;
+const MAP_CENTER = [canvas.width/2,canvas.height/2];
+const MAP_RADIUS = canvas.width/3.2;
 const PLAYER_NUM = 2;
 const PLAYER_RADIUS = MASU_RADIUS * 0.5;
 
@@ -196,8 +196,10 @@ class UI{
 	static write_remain_masu(){
 		// ゴールまであと何マスか数える
 		let n = Math.abs(Math.abs((MASU_NUM/2|0)-players[0].pos)-MASU_NUM*(((2*(players[0].pos<(MASU_NUM/2|0))-1)*dire<0)*(players[0].pos!=(MASU_NUM/2|0))));
-		ctx.fillStyle = BLACK;
-		ctx.fillText("あと"+n+"マス", 10, 50);
+		// ctx.fillStyle = BLACK;
+		// ctx.fillText("あと"+n+"マス", MAP_CENTER[0], MAP_CENTER[1]-200);
+		let remain_text = document.getElementById("remain");
+		remain_text.innerHTML = "あと"+n+"マス";
 	}
 	static write_goal(){
 		if(goal_finish){

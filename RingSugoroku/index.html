@@ -4,12 +4,22 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width" />
 		<title>RingSugoroku</title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/marx/2.0.4/marx.css">
-
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/marx/2.0.4/marx.css"> -->
+		<!-- <link rel="stylesheet" href="style.css"> -->
+		<style type="text/css">
+			.board{
+				text-align: center;
+				width:640px;
+				margin:0 auto;
+			}
+		</style>
 	</head>
 
 	<body>
-		<canvas id="canvas" width="1440" height="960"> </canvas>
+		<div class="board">
+			<span id="remain">a</span>
+			<canvas id="canvas" width="640" height="480"> </canvas>
+		</div>
 		<!-- <main>
 		  <h1>Good Night World...</h1>
 		</main> -->
