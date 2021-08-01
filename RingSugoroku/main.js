@@ -5,13 +5,14 @@ const RED = '#ff4b00'
 const GREEN = '#03af7a'
 const BLUE = '#005aff'
 const BLACK = '#000'
+const WHITE = '#fff'
 
 ctx.strokeStyle = RED;
 ctx.fillStyle = RED;
 ctx.lineWidth = 4;
 
 const MASU_NUM = 16;
-const MASU_RADIUS = 20;
+const MASU_RADIUS = 12;
 const MAP_CENTER = [canvas.width/2,canvas.height/2];
 const MAP_RADIUS = canvas.width/3.2;
 const PLAYER_NUM = 2;
@@ -202,14 +203,28 @@ class UI{
 		remain_text.innerHTML = "あと"+n+"マス";
 	}
 	static write_goal(){
-		if(goal_finish){
-
+		if(goal_finish==1){
+			ctx.fillStyle = RED;
+			ctx.strokeStyle = WHITE;
+			ctx.textAlign = "center";
+			ctx.font = "36px 'ＭＳ ゴシック'";
+			let message = "YOU WIN!";
+			ctx.strokeText(message,MAP_CENTER[0],MAP_CENTER[1]);
+			ctx.fillText(message,MAP_CENTER[0],MAP_CENTER[1]);
+		}else if(goal_finish==2){
+			ctx.fillStyle = BLUE;
+			ctx.strokeStyle = WHITE;
+			ctx.textAlign = "center";
+			ctx.font = "36px 'ＭＳ ゴシック'";
+			let message = "You lose...";
+			
+			ctx.strokeText(message,MAP_CENTER[0],MAP_CENTER[1]);
+			ctx.fillText(message,MAP_CENTER[0],MAP_CENTER[1]);
 		}
 	}
 }
 
 function disp(){
-
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	map.forEach(function(e){e.draw();});
 	players.forEach(function(e){e.animation();e.draw();});
@@ -221,12 +236,16 @@ function goal(p_No){
 	input_wait = 1;
 	if(p_No==1){
 		console.log("You win!");
+		
 		consecutive_wins++;
+		goal_finish = 1;
 	}else{
 		console.log("You lose...");
+
 		consecutive_wins = 0;
+		goal_finish = 2;
 	}
-	goal_finish = 1;
+	
 }
 
 function reset(){
@@ -238,10 +257,32 @@ function reset(){
 	disp();
 }
 
-// document.getElementById("button").onclick = function() {
-// 	players[0].move();
-// 	disp();
-// };
+function botton_dice_123() {
+	if(input_wait == 0){
+		players[0].move(0);
+		disp();
+		input_wait = 1;
+
+		// NPC
+		if(goal_finish==0){
+			npc_event = setTimeout('input_wait=0;players[1].move((Math.random()*2|0));disp();',NPC_WAIT_TIME);
+		}
+	}
+};
+
+function botton_dice_456() {
+	if(input_wait == 0){
+		players[0].move(1);
+		disp();
+		input_wait = 1;
+
+		// NPC
+		if(goal_finish==0){
+			npc_event = setTimeout('input_wait=0;players[1].move((Math.random()*2|0));disp();',NPC_WAIT_TIME);
+		}
+	}
+};
+
 
 // キーボード入力
 document.body.addEventListener('keydown',
