@@ -96,7 +96,17 @@ class Coma{
 	}
 
 	automove(){
-
+		let n = get_remain_distance_to_goal(players[1].pos);
+		if(n<=3){
+			this.move(0);
+			return;
+		}else if(n>6){
+			this.move(1);
+			return;
+		}else{
+			this.move(Math.random()*2|0);
+			return;
+		}
 	}
 
 	draw(){
@@ -196,7 +206,8 @@ class UI{
 	}
 	static write_remain_masu(){
 		// ゴールまであと何マスか数える
-		let n = Math.abs(Math.abs((MASU_NUM/2|0)-players[0].pos)-MASU_NUM*(((2*(players[0].pos<(MASU_NUM/2|0))-1)*dire<0)*(players[0].pos!=(MASU_NUM/2|0))));
+		// let n = Math.abs(Math.abs((MASU_NUM/2|0)-players[0].pos)-MASU_NUM*(((2*(players[0].pos<(MASU_NUM/2|0))-1)*dire<0)*(players[0].pos!=(MASU_NUM/2|0))));
+		let n = get_remain_distance_to_goal(players[0].pos);
 		// ctx.fillStyle = BLACK;
 		// ctx.fillText("あと"+n+"マス", MAP_CENTER[0], MAP_CENTER[1]-200);
 		let remain_text = document.getElementById("remain");
@@ -257,6 +268,11 @@ function reset(){
 	disp();
 }
 
+function get_remain_distance_to_goal(pos){
+	let n = Math.abs(Math.abs((MASU_NUM/2|0)-pos)-MASU_NUM*(((2*(pos<(MASU_NUM/2|0))-1)*dire<0)*(pos!=(MASU_NUM/2|0))));
+	return n;
+}
+
 function botton_dice_123() {
 	if(input_wait == 0){
 		players[0].move(0);
@@ -265,7 +281,7 @@ function botton_dice_123() {
 
 		// NPC
 		if(goal_finish==0){
-			npc_event = setTimeout('input_wait=0;players[1].move((Math.random()*2|0));disp();',NPC_WAIT_TIME);
+			npc_event = setTimeout('input_wait=0;players[1].automove();disp();',NPC_WAIT_TIME);
 		}
 	}
 };
@@ -278,7 +294,7 @@ function botton_dice_456() {
 
 		// NPC
 		if(goal_finish==0){
-			npc_event = setTimeout('input_wait=0;players[1].move((Math.random()*2|0));disp();',NPC_WAIT_TIME);
+			npc_event = setTimeout('input_wait=0;players[1].automove();disp();',NPC_WAIT_TIME);
 		}
 	}
 };
